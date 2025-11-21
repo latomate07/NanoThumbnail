@@ -95,6 +95,11 @@ export const fr = {
         error_api: "Erreur API",
         error_generation: "La génération a terminé avec le statut",
         error_display: "L'image a été générée mais l'affichage direct a rencontré un problème. Essayez le bouton de téléchargement."
+    },
+    footer: {
+        legal_notice: "Mentions Légales",
+        privacy_policy: "Politique de confidentialité",
+        terms_of_service: "Conditions d'utilisation"
     }
 };
 

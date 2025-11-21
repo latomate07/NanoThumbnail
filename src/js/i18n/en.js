@@ -95,6 +95,11 @@ export const en = {
         error_api: "API Error",
         error_generation: "Generation finished with status",
         error_display: "Image was generated but direct display failed. Try the download button."
+    },
+    footer: {
+        legal_notice: "Legal Notice",
+        privacy_policy: "Privacy Policy",
+        terms_of_service: "Terms of Service"
     }
 };
 
