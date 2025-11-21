@@ -12,6 +12,7 @@ window.closeSettings = UI.closeSettings;
 window.saveSettings = UI.saveSettings;
 window.toggleHistory = UI.toggleHistory;
 window.clearImage = UI.clearImage;
+window.removeImage = UI.removeImage;
 window.generateImage = generateImage;
 
 // Special case for history click which passed 'this'
@@ -41,8 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
         dropZone.addEventListener('click', () => fileInput.click());
         
         fileInput.addEventListener('change', (e) => {
+            // Traiter tous les fichiers sélectionnés
             if (e.target.files.length) {
-                UI.processFile(e.target.files[0]);
+                Array.from(e.target.files).forEach(file => {
+                    UI.processFile(file);
+                });
             }
         });
         
@@ -59,9 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.style.borderColor = 'var(--border)';
+            // Traiter tous les fichiers droppés
             if (e.dataTransfer.files.length) {
-                UI.processFile(e.dataTransfer.files[0]);
+                Array.from(e.dataTransfer.files).forEach(file => {
+                    UI.processFile(file);
+                });
             }
         });
     }
+    
+    // Initialiser le rendu des images de référence
+    UI.renderReferenceImages();
 });

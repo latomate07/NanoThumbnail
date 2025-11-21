@@ -48,8 +48,8 @@ export const en = {
     app: {
         sidebar_idea: "1. Your Idea (Prompt)",
         prompt_placeholder: "Describe your thumbnail (e.g., Shocked face, explosion background, text 'AMAZING'...)",
-        sidebar_ref: "2. Reference Image (Optional)",
-        drop_text: "Click or drag an image here",
+        sidebar_ref: "2. Reference Images (Optional)",
+        drop_text: "Click or drag images here",
         sidebar_settings: "3. Settings",
         label_resolution: "Resolution",
         opt_1k: "1K (Fast)",
@@ -59,6 +59,7 @@ export const en = {
         opt_16_9: "16:9 (Youtube)",
         opt_9_16: "9:16 (Shorts)",
         opt_1_1: "1:1 (Square)",
+        opt_4_3: "4:3",
         opt_match: "Match Input",
         label_format: "File Format",
         label_safety: "Safety",
@@ -66,6 +67,8 @@ export const en = {
         opt_permissive: "Permissive",
         opt_strict: "Strict",
         btn_generate: "Generate Thumbnail",
+        btn_clear_all: "Clear All",
+        images: "images",
         placeholder_text: "Your creation will appear here",
         status_working: "AI is working...",
         status_init: "Initializing...",
@@ -81,12 +84,14 @@ export const en = {
         config_title: "Configuration",
         label_api: "Replicate API Key",
         help_api: "Stored locally in your browser.",
+        get_api_key: "Get a Replicate API Key",
         btn_cancel: "Cancel",
         btn_save: "Save"
     },
     alerts: {
         enter_api_key: "Please enter a valid API key.",
         enter_prompt: "Please describe your thumbnail.",
+        max_images: "Maximum 14 images allowed.",
         error_api: "API Error",
         error_generation: "Generation finished with status",
         error_display: "Image was generated but direct display failed. Try the download button."

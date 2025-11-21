@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NanoThumbnail - SaaS Generator</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 448 512%22><path fill=%22%236d28d9%22 d=%22M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z%22/></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
             <button id="historyBtn" class="btn btn-secondary hidden" onclick="toggleHistory()">
                 <i class="fa-solid fa-clock-rotate-left"></i>
             </button>
-            <button class="btn btn-secondary" onclick="openSettings()">
+            <button id="apiBtn" class="btn btn-secondary hidden" onclick="openSettings()">
                 <i class="fa-solid fa-gear"></i> <span data-i18n="header.api_btn">API</span>
             </button>
         </div>
@@ -209,16 +209,22 @@
             </div>
 
             <div class="section">
-                <div class="sidebar-title" data-i18n="app.sidebar_ref">2. Image de Référence (Optionnel)</div>
+                <div class="sidebar-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span data-i18n="app.sidebar_ref">2. Images de Référence (Optionnel)</span>
+                    <span id="imageCount" style="font-size: 0.75rem; color: var(--text-muted);">0/14</span>
+                </div>
+                <div id="previewContainer" class="preview-img-grid">
+                    <!-- Images will be rendered here by JS -->
+                </div>
                 <div class="drop-zone" id="dropZone">
                     <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-muted);"></i>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="app.drop_text">Cliquez ou glissez une image ici</p>
-                    <input type="file" id="fileInput" accept="image/*" hidden>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="app.drop_text">Cliquez ou glissez des images ici</p>
+                    <p class="drop-zone-max-text" style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem;">Max 14 images</p>
+                    <input type="file" id="fileInput" accept="image/*" multiple hidden>
                 </div>
-                <div id="previewContainer" class="preview-img-container">
-                    <img id="previewImage" class="preview-img" src="" alt="Preview">
-                    <button class="remove-img" onclick="clearImage()"><i class="fa-solid fa-times"></i></button>
-                </div>
+                <button id="clearAllBtn" class="btn btn-secondary" onclick="clearImage()" style="display: none; margin-top: 0.5rem; width: 100%;">
+                    <i class="fa-solid fa-trash"></i> <span data-i18n="app.btn_clear_all">Tout effacer</span>
+                </button>
             </div>
 
             <div class="section">
@@ -315,7 +321,11 @@
             <div class="input-group">
                 <label data-i18n="modals.label_api">Clé API Replicate</label>
                 <input type="password" id="apiKeyInput" class="input-field" placeholder="r8_...">
-                <small style="color: var(--text-muted); font-size: 0.8rem;" data-i18n="modals.help_api">Stockée localement dans votre navigateur.</small>
+                <small style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-top: 0.5rem;" data-i18n="modals.help_api">Stockée localement dans votre navigateur.</small>
+                <a href="https://replicate.com/account/api-tokens" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-top: 0.5rem;">
+                    <i class="fa-solid fa-external-link-alt" style="font-size: 0.75rem;"></i>
+                    <span data-i18n="modals.get_api_key">Obtenir une clé API Replicate</span>
+                </a>
             </div>
             <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.5rem;">
                 <button class="btn btn-secondary" onclick="closeSettings()" data-i18n="modals.btn_cancel">Annuler</button>

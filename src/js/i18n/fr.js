@@ -48,8 +48,8 @@ export const fr = {
     app: {
         sidebar_idea: "1. Votre Idée (Prompt)",
         prompt_placeholder: "Décrivez votre miniature (ex: Visage choqué, fond explosion, texte 'INCROYABLE'...)",
-        sidebar_ref: "2. Image de Référence (Optionnel)",
-        drop_text: "Cliquez ou glissez une image ici",
+        sidebar_ref: "2. Images de Référence (Optionnel)",
+        drop_text: "Cliquez ou glissez des images ici",
         sidebar_settings: "3. Paramètres",
         label_resolution: "Résolution",
         opt_1k: "1K (Rapide)",
@@ -59,6 +59,7 @@ export const fr = {
         opt_16_9: "16:9 (Youtube)",
         opt_9_16: "9:16 (Shorts)",
         opt_1_1: "1:1 (Carré)",
+        opt_4_3: "4:3",
         opt_match: "Match Input",
         label_format: "Format Fichier",
         label_safety: "Sécurité",
@@ -66,6 +67,8 @@ export const fr = {
         opt_permissive: "Permissif",
         opt_strict: "Strict",
         btn_generate: "Générer Miniature",
+        btn_clear_all: "Tout effacer",
+        images: "images",
         placeholder_text: "Votre création apparaîtra ici",
         status_working: "L'IA travaille...",
         status_init: "Initialisation...",
@@ -81,12 +84,14 @@ export const fr = {
         config_title: "Configuration",
         label_api: "Clé API Replicate",
         help_api: "Stockée localement dans votre navigateur.",
+        get_api_key: "Obtenir une clé API Replicate",
         btn_cancel: "Annuler",
         btn_save: "Sauvegarder"
     },
     alerts: {
         enter_api_key: "Veuillez entrer une clé API valide.",
         enter_prompt: "Veuillez décrire votre miniature.",
+        max_images: "Maximum 14 images autorisées.",
         error_api: "Erreur API",
         error_generation: "La génération a terminé avec le statut",
         error_display: "L'image a été générée mais l'affichage direct a rencontré un problème. Essayez le bouton de téléchargement."

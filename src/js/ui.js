@@ -13,8 +13,9 @@ export const views = {
 export function showLanding() {
     views.landing.classList.remove('hidden');
     views.app.classList.add('hidden');
-    // Hide history button and close history panel on landing
+    // Hide history button, API button and close history panel on landing
     document.getElementById('historyBtn').classList.add('hidden');
+    document.getElementById('apiBtn').classList.add('hidden');
     views.history.classList.remove('open');
 }
 
@@ -24,8 +25,9 @@ export function startApp() {
     } else {
         views.landing.classList.add('hidden');
         views.app.classList.remove('hidden');
-        // Show history button when in app view
+        // Show history button and API button when in app view
         document.getElementById('historyBtn').classList.remove('hidden');
+        document.getElementById('apiBtn').classList.remove('hidden');
         renderHistory();
     }
 }
@@ -48,7 +50,12 @@ export function saveSettings() {
         closeSettings();
         // If we were on landing, go to app
         if (!views.landing.classList.contains('hidden')) {
-            startApp();
+            views.landing.classList.add('hidden');
+            views.app.classList.remove('hidden');
+            // Show history and API buttons
+            document.getElementById('historyBtn').classList.remove('hidden');
+            document.getElementById('apiBtn').classList.remove('hidden');
+            renderHistory();
         }
     } else {
         alert(t('alerts.enter_api_key'));
@@ -69,6 +76,7 @@ export function loadHistoryImage(url, prompt) {
         views.landing.classList.add('hidden');
         views.app.classList.remove('hidden');
         document.getElementById('historyBtn').classList.remove('hidden');
+        document.getElementById('apiBtn').classList.remove('hidden');
     }
     // Close history panel
     views.history.classList.remove('open');
@@ -128,19 +136,90 @@ export function processFile(file) {
     
     const reader = new FileReader();
     reader.onload = (e) => {
-        state.currentImageBase64 = e.target.result;
-        document.getElementById('previewImage').src = state.currentImageBase64;
-        document.getElementById('previewContainer').style.display = 'block';
-        document.getElementById('dropZone').style.display = 'none';
+        // Vérifier la limite de 14 images au moment de l'ajout (dans le callback asynchrone)
+        if (state.referenceImages.length >= 14) {
+            // Ne pas afficher d'alerte pour chaque image rejetée, juste une fois
+            if (state.referenceImages.length === 14) {
+                alert(t('alerts.max_images') || 'Maximum 14 images autorisées');
+            }
+            return;
+        }
+        
+        state.referenceImages.push(e.target.result);
+        renderReferenceImages();
+        document.getElementById('fileInput').value = ''; // Reset input
     };
     reader.readAsDataURL(file);
 }
 
+export function renderReferenceImages() {
+    const container = document.getElementById('previewContainer');
+    const dropZone = document.getElementById('dropZone');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    
+    // Mettre à jour le compteur
+    const countMsg = document.getElementById('imageCount');
+    if (countMsg) {
+        countMsg.textContent = `${state.referenceImages.length}/14`;
+    }
+    
+    // Si pas d'images, tout réinitialiser
+    if (state.referenceImages.length === 0) {
+        container.style.display = 'none';
+        dropZone.style.display = 'flex';
+        if (clearAllBtn) clearAllBtn.style.display = 'none';
+        if (dropZone) {
+            dropZone.classList.remove('compact', 'disabled');
+        }
+        return;
+    }
+    
+    // Afficher le conteneur d'images et le bouton effacer
+    container.style.display = 'grid';
+    if (clearAllBtn) clearAllBtn.style.display = 'block';
+    
+    // Garder la dropZone visible mais plus compacte
+    dropZone.style.display = 'flex';
+    dropZone.classList.add('compact');
+    
+    // Désactiver la dropZone si on atteint le maximum
+    if (state.referenceImages.length >= 14) {
+        dropZone.classList.add('disabled');
+        dropZone.style.pointerEvents = 'none';
+        dropZone.style.opacity = '0.5';
+    } else {
+        dropZone.classList.remove('disabled');
+        dropZone.style.pointerEvents = 'auto';
+        dropZone.style.opacity = '1';
+    }
+    
+    container.innerHTML = state.referenceImages.map((img, index) => `
+        <div class="preview-img-wrapper">
+            <img src="${img}" class="preview-img" alt="Référence ${index + 1}">
+            <button class="remove-img" data-index="${index}">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+    `).join('');
+    
+    // Attacher les événements aux boutons de suppression
+    container.querySelectorAll('.remove-img').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const index = parseInt(btn.getAttribute('data-index'));
+            removeImage(index);
+        });
+    });
+}
+
+export function removeImage(index) {
+    state.referenceImages.splice(index, 1);
+    renderReferenceImages();
+}
+
 export function clearImage() {
-    state.currentImageBase64 = null;
+    state.referenceImages = [];
     document.getElementById('fileInput').value = '';
-    document.getElementById('previewContainer').style.display = 'none';
-    document.getElementById('dropZone').style.display = 'block';
+    renderReferenceImages();
 }
 
 export async function displayResult(url, prompt) {

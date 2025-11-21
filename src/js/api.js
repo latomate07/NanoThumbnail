@@ -27,12 +27,8 @@ export async function generateImage() {
         aspect_ratio: aspectRatio,
         output_format: format,
         safety_filter_level: safety,
-        image_input: [] 
+        image_input: state.referenceImages // Envoyer toutes les images de référence
     };
-
-    if (state.currentImageBase64) {
-        inputData.image_input = [state.currentImageBase64];
-    }
 
     try {
         const createUrl = `${state.proxyUrl}https://api.replicate.com/v1/models/google/nano-banana-pro/predictions`;
