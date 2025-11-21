@@ -2,7 +2,7 @@
 
 NanoThumbnail is a free, open-source SaaS generator designed to create viral YouTube thumbnails using the power of AI. It leverages the **Google Nano Banana Pro** model via the Replicate API to transform simple prompts into high-quality, expressive images.
 
-![NanoThumbnail Preview](https://yoanbernabeu.github.io/NanoThumbnail/assets/preview.png)
+![NanoThumbnail Preview](image.webp)
 
 ## Features
 
